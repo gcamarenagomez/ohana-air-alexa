@@ -26,6 +26,28 @@ let login = () => {
     });
 };
 
+let findCase = (params) => {
+    let where = "";
+    if (params){
+        let parts = [];
+        if(params.pnr) parts.push(`PNR_Name__c = '${params.pnr}'`);
+        if(parts.length>0){
+            where = "WHERE " + parts.join(' AND ');
+        }
+    }
+    return new Promise((resolve, reject) => {
+        let q = `SELECT Id, CaseNumber, Status, Priority FROM Case ${where} LIMIT 5`;
+        org.query({query: q}, (err, resp) => {
+            if(err){
+                reject(err);
+            }
+            else{
+                resolve(resp.records);
+            }
+        });
+    });
+};
+
 let findTours = (params) => {
     let where = "";
     if(params){
@@ -102,6 +124,7 @@ let createServiceRequest = (slot) => {
 login();
 
 exports.org = org;
+exports.findCase = findCase;
 exports.findTours = findTours;
 exports.makeReservation = makeReservation;
 exports.createServiceRequest = createServiceRequest;

@@ -7,6 +7,35 @@ exports.SearchBags = (slots, session, response) => {
     response.ask('OK, can I get your reservation number, ticket number or Name?');
 }
 
+exports.AnswerPNR = (slots, session, response) => {
+    if(session.attributes.stage === 'ask_pnr'){
+        salesforce.findCase({pnr: slots.pnr.value})
+        .then(cases => {
+            session.attributes.cases = cases;
+            if(cases && cases.length>0){
+                session.attributes.stage = 'next best action';
+                let text = `OK, here is what I found for PNR ${slots.pnr.value}: `;
+                let i = 1;
+                cases.forEach(c => {
+                    text += `Case ${c.get('CaseNumber')}. Status: ${c.get('Status')}`;
+                });
+                text += 'We are sorry about your baggage. As a way to repay you, we are offering you a free ticket for to adults on your next trip to San Francisco. Would you like to make a reservation?';
+                response.ask(text);
+            }
+            else{
+                response.say(`Sorry. I did not find any cases for Reservation ${slots.pnr.value}.`);
+            }
+        })
+        .catch((err)=>{
+            console.error(err);
+            response.say('Ooops... Something went wrong');
+        });
+    }
+    else{
+        response.say("Sorry, I didn't understand that");
+    }
+}
+
 exports.searchDeals = (slots, session, response) => {
     session.attributes.stage = 'ask_city';
     response.ask("OK, in what city?");
