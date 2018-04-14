@@ -9,13 +9,13 @@ exports.SearchBags = (slots, session, response) => {
 
 exports.AnswerPNR = (slots, session, response) => {
     if(session.attributes.stage === 'ask_pnr'){
-        console.log("PNR: %j" + slots.pnr);
-        salesforce.findCase({pnr: slots.pnr.value})
+        console.log("PNR: " + slots.pnr);
+        salesforce.findCase({pnr: slots.pnr})
         .then(cases => {
             session.attributes.cases = cases;
             if(cases && cases.length>0){
                 session.attributes.stage = 'next best action';
-                let text = `OK, here is what I found for PNR ${slots.pnr.value}: `;
+                let text = `OK, here is what I found for PNR ${slots.pnr}: `;
                 let i = 1;
                 cases.forEach(c => {
                     text += `Case ${c.get('CaseNumber')}. Status: ${c.get('Status')}`;
@@ -24,7 +24,7 @@ exports.AnswerPNR = (slots, session, response) => {
                 response.ask(text);
             }
             else{
-                response.say(`Sorry. I did not find any cases for Reservation ${slots.pnr.value}.`);
+                response.say(`Sorry. I did not find any cases for Reservation ${slots.pnr}.`);
             }
         })
         .catch((err)=>{
