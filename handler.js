@@ -2,6 +2,11 @@
 
 let salesforce = require("./salesforce");
 
+exports.SearchBags = (slots, session, response) => {
+    session.attributes.stage = 'ask_pnr';
+    response.ask('OK, can I get your reservation number, ticket number or Name?');
+}
+
 exports.searchDeals = (slots, session, response) => {
     session.attributes.stage = 'ask_city';
     response.ask("OK, in what city?");
