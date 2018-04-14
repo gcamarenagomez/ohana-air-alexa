@@ -9,7 +9,7 @@ exports.SearchBags = (slots, session, response) => {
 
 exports.AnswerPNR = (slots, session, response) => {
     if(session.attributes.stage === 'ask_pnr'){
-        console.log("PNR: %j" + slots);
+        console.log("PNR: %j" + slots.pnr);
         salesforce.findCase({pnr: slots.pnr.value})
         .then(cases => {
             session.attributes.cases = cases;
