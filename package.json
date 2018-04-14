@@ -1,0 +1,23 @@
+{
+  "name": "ohana-air-alexa",
+  "version": "1.0.0",
+  "description": "alexa bot ohana air",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm start"
+  },
+  "keywords": [
+    "alexa",
+    "ohana",
+    "air"
+  ],
+  "author": "Gabriel Camarena Gomez",
+  "license": "ISC",
+  "dependencies": {
+    "alexa-nodekit": "^1.0.2",
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4",
+    "nforce": "^1.4.1",
+    "request": "^2.70.0"
+  }
+}
