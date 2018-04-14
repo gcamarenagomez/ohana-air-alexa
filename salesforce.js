@@ -97,6 +97,23 @@ let makeReservation = (session) => {
     });
 };
 
+let accrueMiles = (slot) => {
+    return new Promise((resolve, reject) => {
+        let c = nForce.createSObject('Contact');
+        c.set('Id', '0036A00000RYt96QAD');
+        c.set('Miles__c', 50000);
+        org.update({sobject: c}, err=>{
+            if(err){
+                console.error(err);
+                reject("An error occurec while updating contact");
+            }
+            else{
+                resolve(c);
+            }
+        });
+    });
+};
+
 let createServiceRequest = (slot) => {
     return new Promise((resolve, reject) => {
         let c = nforce.createSObject('Case');
@@ -128,3 +145,4 @@ exports.findCase = findCase;
 exports.findTours = findTours;
 exports.makeReservation = makeReservation;
 exports.createServiceRequest = createServiceRequest;
+exports.accrueMiles = accrueMiles;

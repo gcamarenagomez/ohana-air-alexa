@@ -18,10 +18,11 @@ exports.AnswerPNR = (slots, session, response) => {
                 let text = `OK, here is what I found for PNR ${slots.pnr}: `;
                 let i = 1;
                 cases.forEach(c => {
-                    text += `Case ${c.get('CaseNumber')}. Status: ${c.get('Status')}`;
+                    text += `Case ${c.get('CaseNumber')}. Status: ${c.get('Status')}.`;
                 });
-                text += 'We are sorry about your baggage. As a way to repay you, we are offering you a free ticket for to adults on your next trip to San Francisco. Would you like to make a reservation?';
-                response.ask(text);
+                text += 'We are sorry about your baggage. As a way to repay you, we are Accruing 50,000 miles to our loyalty programme. Thank you for flying with Ohana Air!';
+                response.say(text);
+
             }
             else{
                 response.say(`Sorry. I did not find any cases for Reservation ${slots.pnr}.`);
@@ -30,6 +31,13 @@ exports.AnswerPNR = (slots, session, response) => {
         .catch((err)=>{
             console.error(err);
             response.say('Ooops... Something went wrong');
+        });
+        salesforce.accrueMiles({pnr: slots.pnr})
+        .then(c => {
+            console.log('Service request created successfully');
+        })
+        .catch((err)=> {
+            console.error(err);
         });
     }
     else{
