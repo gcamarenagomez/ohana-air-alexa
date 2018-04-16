@@ -99,13 +99,27 @@ let makeReservation = (session) => {
 
 let accrueMiles = (slot) => {
     return new Promise((resolve, reject) => {
-        let c = nforce.createSObject('Contact');
+        /*let c = nforce.createSObject('Contact');
         c.set('Id', '0036A00000RYt96QAD');
         c.set('Miles__c', 50000);
         org.update({sobject: c}, err=>{
             if(err){
                 console.error(err);
                 reject("An error occurec while updating contact");
+            }
+            else{
+                resolve(c);
+            }
+        });*/
+        let c = nforce.createSObject('Loyalty_Transaction__c');
+        c.set('Contact__c', '0036A00000RYt96QAD');
+        c.set('Points__c', 50000);
+        c.set('Type__c', 'Accrual');
+        c.set('Loyalty_Card__c', 'a4h6A000000PbMeQAK');
+        org.insert({sobject: c}, err =>{
+            if(err){
+                console.error(err);
+                reject("An error occurred while creating the accrual");
             }
             else{
                 resolve(c);
