@@ -112,7 +112,7 @@ let accrueMiles = (slot) => {
             }
         });*/
         let c = nforce.createSObject('Loyalty_Transaction__c');
-        c.set('Contact__c', '0036A00000RYt96QAD');
+        c.set('Contact__c', '0036A00000RR3P7QAL');
         c.set('Points__c', 50000);
         c.set('Type__c', 'Accrual');
         c.set('Loyalty_Card__c', 'a4h6A000000PbMeQAK');
