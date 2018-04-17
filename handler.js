@@ -21,6 +21,7 @@ exports.AnswerPNR = (slots, session, response) => {
                     text += `Case ${c.get('CaseNumber')}. Status: ${c.get('Status')}`;
                 });
                 text += '. We are sorry about your baggage. As a way to repay you, we are Accruing 50,000 miles to our loyalty programme. Thank you for flying with Ohana Air!';
+                text += 'Congratulations! You just reached the Platinum Tier, well done!!';
                 response.say(text);
 
             }
